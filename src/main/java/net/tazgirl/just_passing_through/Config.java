@@ -1,4 +1,4 @@
-package com.example.examplemod;
+package net.tazgirl.just_passing_through;
 
 import java.util.List;
 import java.util.Set;
