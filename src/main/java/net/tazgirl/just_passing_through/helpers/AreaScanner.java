@@ -7,6 +7,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class AreaScanner
@@ -40,5 +41,36 @@ public class AreaScanner
         }
 
         return returnList;
+    }
+
+    public static void scanAndExecuteArea(Vec3 lowerBound, Vec3 upperBound, Function<BlockState, Boolean> tester, ServerLevel level, Consumer<BlockPos> consumer)
+    {
+        BlockPos testPos;
+        BlockState testState;
+
+        double xPos = lowerBound.x;
+        double yPos = lowerBound.y;
+        double zPos = lowerBound.z;
+
+        while (zPos <= upperBound.z)
+        {
+            while   (yPos <= upperBound.y)
+            {
+                while (xPos <= upperBound.x)
+                {
+                    testPos = BlockPos.containing(xPos, yPos, zPos);
+                    testState = level.getBlockState(testPos);
+
+                    if (tester.apply(testState))
+                    {
+                        consumer.accept(testPos);
+                    }
+
+                    xPos++;
+                }
+                yPos++;
+            }
+            zPos++;
+        }
     }
 }
