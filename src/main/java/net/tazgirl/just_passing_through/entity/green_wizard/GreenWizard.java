@@ -1,4 +1,4 @@
-package net.tazgirl.just_passing_through.entity.test_guy;
+package net.tazgirl.just_passing_through.entity.green_wizard;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
@@ -7,23 +7,28 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.tazgirl.just_passing_through.Entities;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class TestGuy extends AbstractVillager
+public class GreenWizard extends AbstractVillager
 {
-    public TestGuy(EntityType<? extends AbstractVillager> entityType, Level level)
+    public GreenWizard(EntityType<? extends AbstractVillager> entityType, Level level)
     {
         super(entityType, level);
     }
 
     public static void init(RegisterSpawnPlacementsEvent event) {
-        event.register(Entities.TEST_GUY.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+        event.register(Entities.GREEN_WIZARD.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Mob::checkMobSpawnRules,
                 RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
@@ -36,7 +41,7 @@ public class TestGuy extends AbstractVillager
     }
 
     @Override
-    protected void rewardTradeXp(MerchantOffer merchantOffer)
+    protected void rewardTradeXp(@NotNull MerchantOffer merchantOffer)
     {
 
     }
@@ -51,5 +56,13 @@ public class TestGuy extends AbstractVillager
     public @Nullable AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob)
     {
         return null;
+    }
+
+    @Override
+    protected void registerGoals()
+    {
+        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new RandomStrollGoal(this, 1.0));
+        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 8.0F));
     }
 }

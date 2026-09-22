@@ -10,14 +10,14 @@ import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.tazgirl.just_passing_through.entity.test_guy.TestGuy;
+import net.tazgirl.just_passing_through.entity.green_wizard.GreenWizard;
 
 @EventBusSubscriber
 public class Entities
 {
     public static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(Registries.ENTITY_TYPE, JustPassingThrough.MODID);
-    public static final DeferredHolder<EntityType<?>, EntityType<TestGuy>> TEST_GUY = register("test_guy",
-            EntityType.Builder.<TestGuy>of(TestGuy::new, MobCategory.CREATURE).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3)
+    public static final DeferredHolder<EntityType<?>, EntityType<GreenWizard>> GREEN_WIZARD = register("green_wizard",
+            EntityType.Builder.<GreenWizard>of(GreenWizard::new, MobCategory.CREATURE).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3)
 
                     .sized(1f, 2f));
 
@@ -31,12 +31,12 @@ public class Entities
     @SubscribeEvent
     public static void init(RegisterSpawnPlacementsEvent event)
     {
-        TestGuy.init(event);
+        GreenWizard.init(event);
     }
 
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event)
     {
-        event.put(TEST_GUY.get(), TestGuy.createAttributes().build());
+        event.put(GREEN_WIZARD.get(), GreenWizard.createAttributes().build());
     }
 }

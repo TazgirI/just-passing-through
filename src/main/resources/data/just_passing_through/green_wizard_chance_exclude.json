@@ -1,0 +1,7 @@
+{
+  "grass":
+  {
+    "block": "minecraft:grass_block",
+    "chance": 0.05
+  }
+}
