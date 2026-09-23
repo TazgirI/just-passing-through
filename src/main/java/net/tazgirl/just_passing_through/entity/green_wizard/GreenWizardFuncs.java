@@ -105,9 +105,9 @@ public class GreenWizardFuncs
 
         Vec3 direction = targetPos.subtract(mobPos);
 
-        sendParticleWithinRange(sourcePos, new ParticlePacketPayload("GREEN_BURST"), new Vector3f((float) sourcePos.x, (float) sourcePos.y, (float) sourcePos.z), new Vector3f((float) direction.x, (float) direction.y, (float) direction.z))
+        sendParticleWithinRange(sourcePos, new ParticlePacketPayload("GREEN_BURST"), new Vector3f((float) sourcePos.x, (float) sourcePos.y, (float) sourcePos.z), new Vector3f((float) direction.x, (float) direction.y, (float) direction.z));
     
-        executionLevel.playSound(null, BlockPos.comtaining(mobPos), SoundEvents.POTION_READY, SoundSource.NEUTRAL, 1, 0.8f + new Random().nextFloat(-0.1,0.1))
+        executionLevel.playSound(null, BlockPos.comtaining(mobPos), SoundEvents.POTION_READY, SoundSource.NEUTRAL, 1, 0.8f + new Random().nextFloat(-0.1,0.1));
     }
 
     static void sendParticleWithinRange(Vec3 pos, ParticlePacketPayload payload)
