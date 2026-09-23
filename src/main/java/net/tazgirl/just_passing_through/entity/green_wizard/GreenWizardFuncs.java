@@ -93,13 +93,31 @@ public class GreenWizardFuncs
     static void bonemealParticleEffect(BlockPos blockPos)
     {
         Vec3 bottomCentre = blockPos.getBottomCenter();
+        
+        sendParticleWithinRange(bottomCentre, new ParticlePacketPayload("GREEN_BURST", new Vector3f((float) bottomCentre.x, (float) bottomCentre.y, (float) bottomCentre.z), new Vector3f(0, 0.01f, 0)))
+
+        executionLevel.playSound(null, blockPos, SoundEvents.COMPOSTER_READY, SoundSource.NEUTRAL, 1, 1.1f + new Random().nextFloat(-0.05f,0.05f));
+    }
+
+    static void fireDirectionParticle(Vec3 mobPos, Vec3 targetPos)
+    {
+        Vec3 sourcePos = mobPos.add(0, 2, 0);
+
+        Vec3 direction = targetPos.subtract(mobPos);
+
+        sendParticleWithinRange(sourcePos, new ParticlePacketPayload("GREEN_BURST"), new Vector3f((float) sourcePos.x, (float) sourcePos.y, (float) sourcePos.z), new Vector3f((float) direction.x, (float) direction.y, (float) direction.z))
+    
+        executionLevel.playSound(null, BlockPos.comtaining(mobPos), SoundEvents.POTION_READY, SoundSource.NEUTRAL, 1, 0.8f + new Random().nextFloat(-0.1,0.1))
+    }
+
+    static void sendParticleWithinRange(Vec3 pos, ParticlePacketPayload payload)
+    {
         for(ServerPlayer player : executionLevel.players())
         {
-            if(player.distanceToSqr(bottomCentre) <= range)
+            if(player.distanceToSqr(pos) <= range)
             {
-                player.connection.send(new ParticlePacketPayload("GREEN_BURST", new Vector3f((float) bottomCentre.x, (float) bottomCentre.y, (float) bottomCentre.z), new Vector3f(0, 0.01f, 0)));
+                player.connection.send();
             }
         }
-        executionLevel.playSound(null, blockPos, SoundEvents.COMPOSTER_READY, SoundSource.NEUTRAL, 1, 1.1f + new Random().nextFloat(-0.05f,0.05f));
     }
 }
